@@ -96,7 +96,7 @@ function alchemizeAND() {
   punch(3,encoded03);
   return decoded;
 }
-function alchemizeOR(i) {
+function alchemizeOR() {
   for (let i=0; i<=47; i++) {
     encoded03[i] = encoded01[i] | encoded02[i];
   }
@@ -106,7 +106,7 @@ function alchemizeOR(i) {
   return decoded;
 }
 
-function alchemizeXOR(i) {
+function alchemizeXOR() {
   for (let i=0; i<=47; i++) {
     encoded03[i] = encoded01[i] ^ encoded02[i];
   }
@@ -116,7 +116,7 @@ function alchemizeXOR(i) {
   return decoded;
 }
 
-function alchemizeABJ(i) {
+function alchemizeABJ() {
   for (let i=0; i<=47; i++) {
     if (encoded01[i] == 1 && encoded02[i] == 0) {
       encoded03[i] = 1;
@@ -139,9 +139,11 @@ function getChecked() {
   if(this.id==operator) {
     this.checked = false;
     operator = null;
+    equalsButton.src = "img/btn/EQ02.png"
   }
   else {
     operator = this.id;
+    equalsButton.src = "img/btn/EQ00.png"
   }
 }
 
@@ -158,13 +160,13 @@ function equalsDisable() {
 equalsButton.addEventListener('click', button => {
   encoded01 = encode(textPut1.value);
   encoded02 = encode(textPut2.value);
-  if (operator != 0) {
+  if (operator != null) {
     equalsButton.src = "img/btn/EQ01.png";
     setTimeout(() => {equalsButton.src = "img/btn/EQ00.png";}, 150);
   }
-  if (operator == 1) textPut3.value = alchemizeAND(0);
-  else if (operator == 2) textPut3.value = alchemizeOR(0);
-  else if (operator == 3) textPut3.value = alchemizeXOR(0);
-  else if (operator == 4) textPut3.value   = alchemizeABJ(0);
+  if (operator == "AndButton") textPut3.value = alchemizeAND();
+  else if (operator == "OrButton") textPut3.value = alchemizeOR();
+  else if (operator == "XorButton") textPut3.value = alchemizeXOR();
+  else if (operator == "AbjButton") textPut3.value   = alchemizeABJ();
 });
 
