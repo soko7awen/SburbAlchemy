@@ -1,0 +1,193 @@
+@font-face {
+  font-family: 'Fontstuck Extended';
+  src: url('fonts/fontstuck-extended/FontStuck-Extended.woff2') format('woff2'),
+    url('fonts/fontstuck-extended/FontStuck-Extended.woff') format('woff'),
+    url('fonts/fontstuck-extended/FontStuck-Extended.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Monostuck';
+  src: url('fonts/monostuck.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+body {
+  font-family: 'Fontstuck Extended';
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  image-rendering: crisp-edges;
+}
+
+.vbox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hbox {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.cardTextWrap {
+  position: relative;
+}
+
+.card {
+  width:148px;
+  height:188px;
+  background-image: url(img/EmptyCard.png);
+}
+
+.item {
+  position: absolute;
+  width: 102px;
+  height: 144px;
+  top: 18px;
+  left: 35px;
+}
+
+.holesGrid {
+  position: relative;
+  top: 38px;
+  left: 20px;
+  width: 76px;
+  height: 115px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: auto auto auto auto auto auto auto auto auto auto auto auto;
+  row-gap: 5px;
+  column-gap: 4px;
+}
+
+.hole {
+  width: 14px;
+  height: 3px;
+  background-color: white;
+  border: solid black 1px;
+  visibility: hidden;
+}
+
+.textBox {
+  width:192px;
+  height:40px;
+  margin-top: 16px;
+  background-image:url(img/TextBox.png);
+  background-repeat:no-repeat;
+  background-position: center center;
+  mask: url(img/BoxMask.png);
+  mask-position: center;
+}
+
+.textPut {
+  position: relative;
+  top: -5px;
+  left: 10px;
+  background: none;
+  border: none;
+  font-family: 'Monostuck';
+  font-size: 36px;
+  text-align: left;
+  line-height: 23px;
+  resize: none;
+}
+
+::selection {
+  background-color: black;
+  color: white;
+}
+
+.textPut:focus {
+  outline: none;
+}
+
+.opGrid {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: auto auto;  
+}
+
+.eqSign {
+  width: 19px;
+  height: 11px;
+  margin-left:18px;
+  margin-right:20px;
+  background-image: url("img/Equals.png");
+}
+
+.eqBtn {
+  margin-top: 16px;
+}
+
+ /* Customize the label (the container) */
+ .radioWrap {
+  display: block;
+  position: relative;
+  width: 81px;
+  height: 68px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.radioWrap input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom radio button */
+.opBtn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-position-y: bottom;
+  background-repeat: no-repeat;
+}
+
+.andBtn {
+  background-image: url(img/btn/AND00.png);
+}
+/*.radioWrap:hover input ~ .andBtn {
+  background-image: url(img/btn/AND00.png);
+}
+/* When the radio button is checked, add a blue background */
+.radioWrap input:checked ~ .andBtn {
+  background-image: url(img/btn/AND01.png);
+}
+.orBtn {
+  background-image: url(img/btn/OR00.png);
+}
+.radioWrap input:checked ~ .orBtn {
+  background-image: url(img/btn/OR01.png);
+}
+.xorBtn {
+  background-image: url(img/btn/XOR00.png);
+}
+.radioWrap input:checked ~ .xorBtn {
+  background-image: url(img/btn/XOR01.png);
+}
+.abjBtn {
+  background-image: url(img/btn/ABJ00.png);
+}
+.radioWrap input:checked ~ .abjBtn {
+  background-image: url(img/btn/ABJ01.png);
+}

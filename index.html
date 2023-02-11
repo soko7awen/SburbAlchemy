@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Captcha Card Calculator</title>
+    <link href="style.css" rel="stylesheet">
+    <script src="alchemy.js" defer></script>
+  </head>
+  <body onload="onLoad()">
+      <div class="vbox">
+          <div class="hbox">
+            <div class="vbox cardTextWrap">
+              <div class="card" id="Card1">
+                <div class="item"></div>
+                <div class="holesGrid" id="HolesGrid1">
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                </div>
+              </div>
+              <div class="textBox">
+                <input class="textPut textInput" id="TextPut1" placeholder="00000000" maxlength="8">
+              </div>
+            </div>
+            <div class="opGrid">
+              <label class="radioWrap"><input type="radio" name="operator" id="AndButton"><span class="opBtn andBtn"></span></label>
+              <label class="radioWrap"><input type="radio" name="operator" id="OrButton"><span class="opBtn orBtn"></span></label>
+              <label class="radioWrap"><input type="radio" name="operator" id="XorButton"><span class="opBtn xorBtn"></span></label>
+              <label class="radioWrap"><input type="radio" name="operator" id="AbjButton"><span class="opBtn abjBtn"></span></label>
+            </div>
+            <div class="vbox cardTextWrap">
+              <div class="card" id="Card2">
+                <div class="item"></div>
+                <div class="holesGrid" id="HolesGrid2">
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                </div>
+              </div>
+              <div class="textBox">
+                <input class="textPut textInput" id="TextPut2" placeholder="00000000" maxlength="8">
+              </div>
+            </div>
+            <div class="eqSign"></div>
+            <div class="vbox cardTextWrap">
+              <div class="card" id="Card3">
+                <div class="item"></div>
+                <div class="holesGrid" id="HolesGrid3">
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                  <div class="hole"></div>
+                </div>
+              </div>
+              <div class="textBox">
+                <input class="textPut textInput" id="TextPut3" maxlength="8" readonly="readonly">
+            </div>
+          </div>
+        </div>
+        <img src="img/btn/EQ02.png" class="eqBtn" id="EqualsButton">
+    </body>
+</html>
