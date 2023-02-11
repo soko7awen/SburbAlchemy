@@ -13,8 +13,6 @@ const card3 = document.getElementById("Card3");
 const holesGrid3 = document.getElementById("HolesGrid3");
 const textPut3 = document.getElementById("TextPut3");
 
-
-
 const cipher = ["0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","?","!"];
 let encoded01 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 let encoded02 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
@@ -30,6 +28,11 @@ function onLoad() {
   punch(1,encode(textPut1.value));
   image(2,textPut2.value);
   punch(2,encode(textPut2.value));
+  if (andButton.checked = true) operator = "AndButton";
+  else if (orButton.checked = true) operator = "OrButton";
+  else if (xorButton.checked = true) operator = "XorButton";
+  else if (abjButton.checked = true) operator = "AbjButton";
+  if (operator != null) equalsButton.src = "img/btn/EQ00.png";
 }
 
 function onTextChanged(evt) {
@@ -157,7 +160,9 @@ function equalsDisable() {
   equalsButton.style = "cursor: pointer;"
 }
 
-equalsButton.addEventListener('click', button => {
+equalsButton.addEventListener('click', alchemize);
+
+function alchemize() {
   encoded01 = encode(textPut1.value);
   encoded02 = encode(textPut2.value);
   if (operator != null) {
@@ -168,5 +173,5 @@ equalsButton.addEventListener('click', button => {
   else if (operator == "OrButton") textPut3.value = alchemizeOR();
   else if (operator == "XorButton") textPut3.value = alchemizeXOR();
   else if (operator == "AbjButton") textPut3.value   = alchemizeABJ();
-});
+}
 
