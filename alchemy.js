@@ -12,34 +12,145 @@ const equalsButton = document.getElementById("EqualsButton");
 const card3 = document.getElementById("Card3");
 const holesGrid3 = document.getElementById("HolesGrid3");
 const textPut3 = document.getElementById("TextPut3");
+const suggestionsContainer = document.getElementById('suggestions-container');
+const items = {
+"00000000": "perfectly_generic_object",
+"11111111": "captchalogue_card",
+"DQMmJLeK": "green_slime_ghost_pogo",
+"nZ7Un6BI": "claw_hammer",
+"dskjhsdk": "rocket_pack_with_items",
+"126GH48G": "pogo_hammer",
+"cZCMY4Qf": "cruxite_apple",
+"zxN?pNhM": "hammerhead_pogo_ride",
+"00080020": "joker_figurine",
+"CuPA8LnQ": "potted_plant",
+"CuPA8LpQ": "cosby_poster_that_john_drew_on",
+"CuP28LpQ": "painting_of_a_horse_attacking_a_football_player",
+"CuP28LnQ": "clean_cosby_poster",
+"Q82a0H54": "cruxite_bottle",
+"?0YFY90!": "dutton_photo",
+"L229BxoG": "punch_designix",
+"PCHOOOOO": "rocket_pack",
+"pshoooes": "rocket_boots",
+"PSWOOOOP": "rocket_wings",
+"WIin189Q": "fear_no_anvil",
+"72KH?CNq": "roses_journals",
+"FFFFFFWW": "ahabs_crosshairs",
+"r5jQS?v2": "box_of_chalk",
+"82THE8TH": "fluorite_octet",
+"qG4e0H5C": "cruxite_dog_pinata",
+"uROBuROS": "red_sucker",
+"UrobUros": "green_sucker",
+"!!!!!!!!": "perfectly_unique_object"
+};
 
 const cipher = ["0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","?","!"];
-let encoded01 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-let encoded02 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-let encoded03 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+let encoded01 = new Array(48).fill(0);
+let encoded02 = new Array(48).fill(0);
+let encoded03 = new Array(48).fill(0);
 let operator = null;
+let currentIndex = -1;
 
-textPut1.addEventListener('input', onTextChanged);
-textPut2.addEventListener('input', onTextChanged);
-textPut3.addEventListener('input', onTextChanged);
+document.addEventListener('DOMContentLoaded', () => {
+  const inputs = [textPut1, textPut2, textPut3];
+  inputs.forEach(input => {
+      input.addEventListener('input', onTextChanged);
+      input.addEventListener("focus", onTextFocus); 
+      input.addEventListener('keydown', onKeyDown);
+  });
 
-function onLoad() {
-  image(1,textPut1.value);
+  document.addEventListener('click', (event) => {
+      if (!suggestionsContainer.contains(event.target) && !inputs.includes(event.target)) {
+          suggestionsContainer.innerHTML = '';
+      }
+  });
   punch(1,encode(textPut1.value));
-  image(2,textPut2.value);
+  image(1,textPut1.value);
   punch(2,encode(textPut2.value));
-  if (andButton.checked = true) operator = "AndButton";
-  else if (orButton.checked = true) operator = "OrButton";
-  else if (xorButton.checked = true) operator = "XorButton";
-  else if (abjButton.checked = true) operator = "AbjButton";
+  image(2,textPut2.value);
+  operator = [andButton, orButton, xorButton, abjButton].find(button => button.checked)?.id;
   if (operator != null) equalsButton.src = "img/btn/EQ00.png";
-}
+});
 
 function onTextChanged(evt) {
+  const input = evt.currentTarget;
   let id = evt.currentTarget.id.slice(-1);
-  let item_encoded = encode(this.value)
-  image(id,this.value);
+  this.value = evt.currentTarget.value.substr(0,8);
+  let item_encoded = encode(this.value);
+  const query = this.value.toLowerCase();
+  suggestionsContainer.innerHTML = '';
+  currentIndex = -1;
+
+  if (query) {
+    const filteredSuggestions = Object.keys(items).filter(item => item.toLowerCase().startsWith(query));
+
+    filteredSuggestions.forEach((suggestion, index) => {
+        const suggestionItem = document.createElement('div');
+        suggestionItem.classList.add('suggestion-item');
+        suggestionItem.textContent = suggestion;
+
+        suggestionItem.addEventListener('click', () => {
+            input.value = suggestion;
+            suggestionsContainer.innerHTML = '';
+            const event = new Event('input', { bubbles: true });
+            input.dispatchEvent(event);
+        });
+
+        suggestionsContainer.appendChild(suggestionItem);
+    });
+  }
   punch(id,item_encoded);
+  image(id,this.value);
+}
+
+function onTextFocus(evt){
+  const input = evt.currentTarget;
+  suggestionsContainer.innerHTML = '';
+  input.parentElement.appendChild(suggestionsContainer);
+}
+
+function onKeyDown(event) {
+  const input = event.currentTarget;
+  const suggestionItems = document.querySelectorAll('.suggestion-item');
+
+  if (event.key === 'ArrowDown' && suggestionItems.length > 0) {
+      event.preventDefault();
+      currentIndex = (currentIndex + 1) % suggestionItems.length;
+      highlightSuggestion(suggestionItems, currentIndex);
+  } else if (event.key === 'ArrowUp' && suggestionItems.length > 0) {
+      event.preventDefault();
+      if (currentIndex === -1) {
+          currentIndex = suggestionItems.length - 1;
+      } else if (currentIndex === 0) {
+          currentIndex = -1;
+          highlightSuggestion(suggestionItems, currentIndex);
+          return;
+      } else {
+          currentIndex = (currentIndex - 1) % suggestionItems.length;
+      }
+      highlightSuggestion(suggestionItems, currentIndex);
+  } else if (event.key === 'Enter') {
+      if (currentIndex > -1) {
+          event.preventDefault();
+          input.value = suggestionItems[currentIndex].textContent;
+          const inputEvent = new Event('input', { bubbles: true });
+          input.dispatchEvent(inputEvent);
+      }
+      suggestionsContainer.innerHTML = '';
+      currentIndex = -1;
+  }
+}
+
+
+
+function highlightSuggestion(items, index) {
+  items.forEach((item, i) => {
+      if (i === index) {
+          item.classList.add('highlight');
+      } else {
+          item.classList.remove('highlight');
+      }
+  });
 }
 
 function punch(id,item_encoded) {
@@ -58,11 +169,8 @@ function punch(id,item_encoded) {
 }
 
 function image(id,code) {
-  let card;
-  if (id == 1) {card = card1}
-  else if (id == 2) { card = card2}
-  else if (id == 3) { card = card3}
-  card.children[0].style.backgroundImage = "url(img/item/"+code+".png)";
+  const card = document.getElementById(`Card${id}`);
+  card.children[0].style.backgroundImage = (!card || !Object.keys(items).includes(code)) ? "" : "url(img/item/"+items[code]+".png)";
 }
 
 function encode(code) {
@@ -160,6 +268,12 @@ function equalsDisable() {
   equalsButton.style = "cursor: pointer;"
 }
 
+equalsButton.addEventListener('keypress', onEqualsKeypressed);
+
+function onEqualsKeypressed(evt) {
+  if (evt.key === "Enter") evt.currentTarget.click();
+}
+
 equalsButton.addEventListener('click', alchemize);
 
 function alchemize() {
@@ -174,4 +288,3 @@ function alchemize() {
   else if (operator == "XorButton") textPut3.value = alchemizeXOR();
   else if (operator == "AbjButton") textPut3.value   = alchemizeABJ();
 }
-

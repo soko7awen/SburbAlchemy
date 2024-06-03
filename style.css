@@ -17,6 +17,7 @@
 }
 
 body {
+  background-color: white;
   font-family: 'Fontstuck Extended';
   display: flex;
   flex-direction: column;
@@ -24,6 +25,11 @@ body {
   align-items: center;
   height: 100vh;
   image-rendering: crisp-edges;
+}
+
+body::after{
+  position:absolute; width:0; height:0; overflow:hidden; z-index:-1;
+  content:url(img/btn/AND1.png) url(img/btn/OR01.png) url(img/btn/XOR01.png) url(img/btn/ABJ01.png);
 }
 
 .vbox {
@@ -56,6 +62,7 @@ body {
   height: 144px;
   top: 18px;
   left: 35px;
+  background-size: cover;
 }
 
 .holesGrid {
@@ -86,8 +93,8 @@ body {
   background-image:url(img/TextBox.png);
   background-repeat:no-repeat;
   background-position: center center;
-  mask: url(img/BoxMask.png);
-  mask-position: center;
+  /*mask: url(img/BoxMask.png);
+  mask-position: center;*/
 }
 
 .textPut {
@@ -103,6 +110,10 @@ body {
   resize: none;
 }
 
+.textPut:disabled {
+  color: black;
+}
+
 ::selection {
   background-color: black;
   color: white;
@@ -110,6 +121,10 @@ body {
 
 .textPut:focus {
   outline: none;
+}
+
+.highlight {
+  background-color: #d3d3d3;
 }
 
 .opGrid {
@@ -169,8 +184,7 @@ body {
 }
 /*.radioWrap:hover input ~ .andBtn {
   background-image: url(img/btn/AND00.png);
-}
-/* When the radio button is checked, add a blue background */
+}*/
 .radioWrap input:checked ~ .andBtn {
   background-image: url(img/btn/AND01.png);
 }
@@ -191,4 +205,25 @@ body {
 }
 .radioWrap input:checked ~ .abjBtn {
   background-image: url(img/btn/ABJ01.png);
+}
+
+.suggestions {
+    position: absolute;
+    border: 1px solid #ccc;
+    border-top: none;
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: #fff;
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 1000;
+}
+
+.suggestion-item {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.suggestion-item:hover {
+    background-color: #f0f0f0;
 }

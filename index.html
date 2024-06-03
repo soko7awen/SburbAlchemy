@@ -6,7 +6,7 @@
     <link href="style.css" rel="stylesheet">
     <script src="alchemy.js" defer></script>
   </head>
-  <body onload="onLoad()">
+  <body>
       <div class="vbox">
           <div class="hbox">
             <div class="vbox cardTextWrap">
@@ -65,6 +65,7 @@
               </div>
               <div class="textBox">
                 <input class="textPut" id="TextPut1" placeholder="00000000" maxlength="8">
+                <div id="suggestions-container" class="suggestions"></div>
               </div>
             </div>
             <div class="opGrid">
@@ -187,10 +188,10 @@
                 </div>
               </div>
               <div class="textBox">
-                <input class="textPut" id="TextPut3" maxlength="8" readonly="readonly">
+                <input class="textPut" id="TextPut3" maxlength="8" readonly="readonly" disabled>
             </div>
           </div>
         </div>
-        <img src="img/btn/EQ02.png" class="eqBtn" id="EqualsButton">
+        <img src="img/btn/EQ02.png" class="eqBtn" id="EqualsButton" tabindex="0">
     </body>
 </html>
