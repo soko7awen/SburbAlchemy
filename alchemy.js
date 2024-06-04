@@ -1,3 +1,4 @@
+//A bunch of lines that wouldn't have to exist if I had used jQuery :p
 const card1 = document.getElementById("Card1");
 const card2 = document.getElementById("Card2");
 const holesGrid1 = document.getElementById("HolesGrid1");
@@ -13,6 +14,7 @@ const card3 = document.getElementById("Card3");
 const holesGrid3 = document.getElementById("HolesGrid3");
 const textPut3 = document.getElementById("TextPut3");
 const suggestionsContainer = document.getElementById('suggestions-container');
+//List of items to be used in or created with alchemy
 const items = {
 "00000000": "perfectly_generic_object",
 "11111111": "captchalogue_card",
@@ -43,32 +45,33 @@ const items = {
 "UrobUros": "green_sucker",
 "!!!!!!!!": "perfectly_unique_object"
 };
-
+//Base 64 encoded with these characters: 0-9, A-Z, a-z, ?, !
 const cipher = ["0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","?","!"];
+//Declare 3 arrays to hold the base 64 encoded strings
 let encoded01 = new Array(48).fill(0);
 let encoded02 = new Array(48).fill(0);
 let encoded03 = new Array(48).fill(0);
+//Current Operator (&&,||, ^^, -)
 let operator = null;
-let currentIndex = -1;
+//Index in code suggestion list
+let suggestionIndex = -1;
 
 document.addEventListener('DOMContentLoaded', () => {
   const inputs = [textPut1, textPut2, textPut3];
+  //Listen for inputs on textbox inputs
   inputs.forEach(input => {
       input.addEventListener('input', onTextChanged);
       input.addEventListener("focus", onTextFocus); 
       input.addEventListener('keydown', onKeyDown);
   });
-
-  document.addEventListener('click', (event) => {
-      if (!suggestionsContainer.contains(event.target) && !inputs.includes(event.target)) {
-          suggestionsContainer.innerHTML = '';
-      }
-  });
+  //Punches the holes and sets the corresponding image
   punch(1,encode(textPut1.value));
   image(1,textPut1.value);
   punch(2,encode(textPut2.value));
   image(2,textPut2.value);
+  //Sets the operator to the id of the pressed button
   operator = [andButton, orButton, xorButton, abjButton].find(button => button.checked)?.id;
+  //If no operator is selected, then grey out the "Alchemize!" button
   if (operator != null) equalsButton.src = "img/btn/EQ00.png";
 });
 
@@ -79,7 +82,7 @@ function onTextChanged(evt) {
   let item_encoded = encode(this.value);
   const query = this.value.toLowerCase();
   suggestionsContainer.innerHTML = '';
-  currentIndex = -1;
+  suggestionIndex = -1;
 
   if (query) {
     const filteredSuggestions = Object.keys(items).filter(item => item.toLowerCase().startsWith(query));
@@ -91,9 +94,10 @@ function onTextChanged(evt) {
 
         suggestionItem.addEventListener('click', () => {
             input.value = suggestion;
-            suggestionsContainer.innerHTML = '';
             const event = new Event('input', { bubbles: true });
             input.dispatchEvent(event);
+            suggestionsContainer.innerHTML = '';
+            suggestionIndex = -1;
         });
 
         suggestionsContainer.appendChild(suggestionItem);
@@ -115,29 +119,29 @@ function onKeyDown(event) {
 
   if (event.key === 'ArrowDown' && suggestionItems.length > 0) {
       event.preventDefault();
-      currentIndex = (currentIndex + 1) % suggestionItems.length;
-      highlightSuggestion(suggestionItems, currentIndex);
+      suggestionIndex = (suggestionIndex + 1) % suggestionItems.length;
+      highlightSuggestion(suggestionItems, suggestionIndex);
   } else if (event.key === 'ArrowUp' && suggestionItems.length > 0) {
       event.preventDefault();
-      if (currentIndex === -1) {
-          currentIndex = suggestionItems.length - 1;
-      } else if (currentIndex === 0) {
-          currentIndex = -1;
-          highlightSuggestion(suggestionItems, currentIndex);
+      if (suggestionIndex === -1) {
+          suggestionIndex = suggestionItems.length - 1;
+      } else if (suggestionIndex === 0) {
+          suggestionIndex = -1;
+          highlightSuggestion(suggestionItems, suggestionIndex);
           return;
       } else {
-          currentIndex = (currentIndex - 1) % suggestionItems.length;
+          suggestionIndex = (suggestionIndex - 1) % suggestionItems.length;
       }
-      highlightSuggestion(suggestionItems, currentIndex);
+      highlightSuggestion(suggestionItems, suggestionIndex);
   } else if (event.key === 'Enter') {
-      if (currentIndex > -1) {
+      if (suggestionIndex > -1) {
           event.preventDefault();
-          input.value = suggestionItems[currentIndex].textContent;
+          input.value = suggestionItems[suggestionIndex].textContent;
           const inputEvent = new Event('input', { bubbles: true });
           input.dispatchEvent(inputEvent);
       }
       suggestionsContainer.innerHTML = '';
-      currentIndex = -1;
+      suggestionIndex = -1;
   }
 }
 
